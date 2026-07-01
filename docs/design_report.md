@@ -118,7 +118,7 @@ Trae Agent
 ├── 任务分解
 │   ├── 仓库初始化（目录结构、配置文件）
 │   ├── 管线代码编写（team2_server.py）
-│   ├── 远程执行管理（gssh CLI 工具）
+│   ├── 远程执行管理（远程 GPU 服务器任务调度）
 │   └── 结果分析与提交文件生成
 ├── 代码生成
 │   ├── ProteinMPNN 调用封装
@@ -138,7 +138,7 @@ Trae Agent
 ### 5.2 关键执行日志
 
 - Agent 自动完成从仓库搭建到管线代码的全流程编写
-- 通过 gssh CLI 工具一键将代码推送到远程 AutoDL GPU 服务器
+- 通过 SSH 将代码推送到远程 AutoDL GPU 服务器
 - 远程执行 `python team2_server.py`，实时回传日志
 - 900 条候选的 ESMFold 筛选在单卡 A100 上完成
 - Agent 自动解析结果 JSON 并生成最终提交 CSV

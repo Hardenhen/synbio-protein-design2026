@@ -198,7 +198,7 @@ AURORA 队伍使用 **Trae AI Agent(Claude 系列)** 辅助代码编写、实验
 │   └─ 评分与筛选函数(含存活门槛与 Top-6 排序)
 │
 ├─ 3. 远程执行
-│   ├─ gssh CLI:远程 A800 / A100 服务器任务调度
+│   ├─ SSH 远程 A800 / A100 服务器任务调度
 │   ├─ 后台执行 + 实时日志拉取
 │   └─ 进度 JSON 持久化 + 自动接力下一轮
 │
@@ -213,7 +213,7 @@ AURORA 队伍使用 **Trae AI Agent(Claude 系列)** 辅助代码编写、实验
 - **种子选择**:Agent 对 5 个参考 GFP 做 pairwise identity,发现 sfGFP / avGFP 与 sfGFP 自身相似度 > 95%,判定为同质化高风险,主动建议改选低相似度 3 个种子
 - **固定残基策略**:Agent 通过分析 MPNN 默认输出,发现若不固定 position 1(M 起始),将产生大量不合规序列;**在 AURORA 第一轮就主动采用 6 位固定 [1, 65, 66, 67, 96, 222]**,从源头规避合规性风险
 - **温度策略**:Agent 选择中等温度 [0.1, 0.2, 0.5],理由是从零开始需要一定探索空间,同时避免高温度带来过多无效候选
-- **远程执行**:通过自研 gssh CLI 将脚本推送至 A800 服务器,后台启动 ProteinMPNN + ESMFold 全流程,实时回传进度
+- **远程执行**:通过 SSH 将脚本推送至 A800 服务器,后台启动 ProteinMPNN + ESMFold 全流程,实时回传进度
 - **迭代收敛**:Agent 在 Local R2 达到 0.9291 后,尝试 R3 极低温精修但未超越 R2,主动建议停止进一步降温迭代,锁定 R2 为最终提交版本
 
 ---
@@ -242,7 +242,7 @@ AURORA 队伍使用 **Trae AI Agent(Claude 系列)** 辅助代码编写、实验
 | 序列生成 | ProteinMPNN v_48_020 |
 | 结构预测 | ESMFold (facebook/esmfold_v1) via HuggingFace Transformers |
 | 评分 | 自研 sort_score 函数 |
-| 远程执行 | 自研 gssh CLI(本地 RTX 5080 ↔ 远程 A800 / A100) |
+| 远程执行 | SSH(本地 RTX 5080 ↔ 远程 A800 / A100) |
 | 数据持久化 | CSV + JSON(本仓库 `results/`) |
 | 可视化 | R + ggplot2(本仓库 `docs/figures/`) |
 
